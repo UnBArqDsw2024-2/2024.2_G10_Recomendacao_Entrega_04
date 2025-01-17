@@ -1,17 +1,37 @@
 package com.api.API.models;
 
-import lombok.Data;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
-public abstract class Avaliacao {
+import java.math.BigDecimal;
 
-    private Usuario autor;
-    private Restaurante restaurante;
-    private Estado estado;
-    private Tag tags[];
+@Entity
+@Table(name = "avaliacao")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class Avaliacao {
 
-    public abstract String publicar();
-    public abstract String arquivar();
-    public abstract String validar();
-    public abstract String editar();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer idAvaliacao;
+    private String texto;
+    private String urlVideo;
+    private String urlImagen;
+    private BigDecimal nota;
+    private Integer idRestarante;
+    private Integer idCliente;
+
+    public Avaliacao(String texto, String urlVideo, String urlImagen, BigDecimal nota, Integer idRestarante, Integer idCliente) {
+        this.texto = texto;
+        this.urlVideo = urlVideo;
+        this.urlImagen = urlImagen;
+        this.nota = nota;
+        this.idRestarante = idRestarante;
+        this.idCliente = idCliente;
+    }
 }

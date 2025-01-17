@@ -6,22 +6,20 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.math.BigDecimal;
+import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
-@Table(name = "prato")
+@Table(name = "inclui")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Prato {
+public class Inclui {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private Integer idMenu;
     private Integer idPrato;
-    private String nomePrato;
-    private String descricao;
-    private BigDecimal preco;
-
-
 }

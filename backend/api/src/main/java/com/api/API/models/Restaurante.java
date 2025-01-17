@@ -1,19 +1,35 @@
 package com.api.API.models;
 
-public class Restaurante {
-    private String nome;
-    private Menu menu;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-    public Restaurante(String nome, int capacidadeMenu) {
-        this.nome = nome;
-        this.menu = new Menu(capacidadeMenu);
-    }
+import java.io.Serializable;
 
-    public String getNome() {
-        return nome;
-    }
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "restaurante")
+public class Restaurante implements Serializable {
 
-    public Menu getMenu() {
-        return menu;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer idRestaurante;
+    private String nomeRestaurante;
+    private String endereco;
+    private Integer idCliente;
+    private Integer idFuncionario;
+
+
+    public Restaurante(String nomeRestaurante, String endereco, Integer idCliente, Integer idFuncionario) {
+        this.nomeRestaurante = nomeRestaurante;
+        this.endereco = endereco;
+        this.idCliente = idCliente;
+        this.idFuncionario = idFuncionario;
     }
 }
+

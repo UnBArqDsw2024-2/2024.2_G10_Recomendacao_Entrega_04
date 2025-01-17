@@ -10,6 +10,7 @@ import lombok.Setter;
 @Table(name="tag")
 @Getter
 @Setter
+@AllArgsConstructor
 public class Tag {
 
     @Id
