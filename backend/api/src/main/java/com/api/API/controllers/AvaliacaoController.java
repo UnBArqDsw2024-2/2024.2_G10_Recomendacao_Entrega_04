@@ -18,17 +18,20 @@ public class AvaliacaoController {
     }
 
     @GetMapping("/getAllAvaliacoes")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<List<Avaliacao>> getAllAvaliacoes() {
         return ResponseEntity.ok(avaliacaoService.getAllAvaliacoes());
     }
 
     @PostMapping("/createAvaliacao")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<Avaliacao> createAvaliacao(@RequestBody Avaliacao avaliacao) {
         Avaliacao newAvaliacao = avaliacaoService.createAvaliacao(avaliacao);
         return ResponseEntity.ok(newAvaliacao);
     }
 
     @GetMapping("/restaurante")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<List<Avaliacao>> getAvaliacoesByRestaurante(@RequestParam Integer idRestaurante) {
         List<Avaliacao> avaliacoes = avaliacaoService.getAvaliacoesByRestaurante(idRestaurante);
         if (avaliacoes.isEmpty()) {

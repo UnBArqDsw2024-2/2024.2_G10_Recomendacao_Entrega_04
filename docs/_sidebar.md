@@ -1,8 +1,5 @@
 <!-- docs/_sidebar.md -->
 
-- Atas
-  - [Template de Ata](/atas/template-ata.md)
-
 - **Arquitetura de Software & Reutilização**
   - [4. Desenho de Software (Arquitetura & Reutilização de Software)](/ArquiteturaReutilizacao/4.ArquiteturaReutilizacao.md)
     - [4.1. DAS](/ArquiteturaReutilizacao/4.1.DAS.md)

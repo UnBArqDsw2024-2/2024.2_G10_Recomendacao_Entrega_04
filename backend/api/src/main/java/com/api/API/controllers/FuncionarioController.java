@@ -20,11 +20,13 @@ public class FuncionarioController {
     }
 
     @GetMapping("/getAllFuncionario")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<List<Funcionario>> getAllFuncionarios() {
         return ResponseEntity.ok(funcionarioService.getAllFuncionarios());
     }
 
     @PostMapping("/createFuncionario")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<Funcionario> createFuncionario(@RequestBody Funcionario funcionario) {
         Funcionario newFuncionario = funcionarioService.createFuncionario(funcionario);
 
@@ -32,6 +34,7 @@ public class FuncionarioController {
     }
 
     @GetMapping("/email")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<Funcionario> getFuncionarioByEmail(@RequestParam String email) {
         return funcionarioService.getFuncionarioByEmail(email)
                 .map(ResponseEntity::ok)

@@ -18,17 +18,21 @@ public class RestauranteController {
     }
 
     @GetMapping("/getAllRestaurantes")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<List<Restaurante>> getAllRestaurantes() {
         return ResponseEntity.ok(restauranteService.getAllRestaurantes());
     }
 
+
     @PostMapping("/createRestaurante")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<Restaurante> createRestaurante(@RequestBody Restaurante restaurante) {
         Restaurante newRestaurante = restauranteService.createRestaurante(restaurante);
         return ResponseEntity.ok(newRestaurante);
     }
 
     @GetMapping("/nome")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<Restaurante> getRestauranteByNome(@RequestParam String nomeRestaurante) {
         return restauranteService.getRestauranteByNome(nomeRestaurante)
                 .map(ResponseEntity::ok)

@@ -20,11 +20,13 @@ public class ClienteController {
     }
 
     @GetMapping("/getAllCliente")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<List<Cliente>> getAllClientes() {
         return ResponseEntity.ok(clienteService.getAllClientes());
     }
 
     @PostMapping("/createCliente")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<Cliente> createCliente(@RequestBody Cliente cliente) {
         Cliente newCliente = clienteService.createCliente(cliente);
 
@@ -32,6 +34,7 @@ public class ClienteController {
     }
 
     @GetMapping("/email")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<Cliente> getClienteByEmail(@RequestParam String email) {
         return clienteService.getClienteByEmail(email)
                 .map(ResponseEntity::ok)
