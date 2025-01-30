@@ -82,9 +82,11 @@ function CadastroPage() {
     <div className="cadastro-page">
       <Navbar />
 
-      <Container component="main" maxWidth="xs" sx={{ marginTop: 10 }}>
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: 3, backgroundColor: 'white', borderRadius: 2, boxShadow: 3 }}>
-          <Typography variant="h5">Cadastro</Typography>
+      <Container component="main" maxWidth="md" sx={{ marginTop: 5, marginBottom: 5 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: 3, backgroundColor: 'white', borderRadius: 2, boxShadow: 3,
+          borderColor: '#44a49b', borderStyle: 'solid', borderWidth: 1
+         }}>
+          <Typography variant="h5">CADASTRE-SE</Typography>
 
 
           <FormControl fullWidth margin="normal">
@@ -117,7 +119,7 @@ function CadastroPage() {
 
             {error && <Typography color="error">{error}</Typography>}
             
-            <Button type="submit" fullWidth variant="contained" color="primary" sx={{ mt: 2 }}>
+            <Button type="submit" fullWidth variant="contained" sx={{ mt: 2, backgroundColor: '#44a49b' }}>
               Cadastrar
             </Button>
           </form>

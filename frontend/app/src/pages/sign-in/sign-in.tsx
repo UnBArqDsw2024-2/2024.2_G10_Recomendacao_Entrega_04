@@ -55,7 +55,7 @@ function SignInPage() {
 
       setSuccess(true);
 
-      navigate(tipoUsuario === 'cliente' ? `/home-cliente/${userData.idCliente}` : `/home-funcionario/${userData.idFuncionario}`);
+      navigate(tipoUsuario === 'cliente' ? `/home-cliente/${userData.idCliente}` : `/home-funcionario/${userData}`);
     } catch (err: any) {
       setError(err.message);
     }
@@ -74,7 +74,9 @@ function SignInPage() {
             padding: 3, 
             backgroundColor: 'white', 
             borderRadius: 2, 
-            boxShadow: 3 
+            boxShadow: 3 ,
+            borderColor: '#44a49b', borderStyle: 'solid', borderWidth: 1
+            
           }}
         >
           <Typography variant="h5">Login</Typography>

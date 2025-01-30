@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AppBar, Toolbar, Button, Card, CardContent, Typography, Grid, TextField, Box } from '@mui/material';
+import { AppBar, Toolbar, Button, Card, CardContent, Typography, Grid, TextField, Box, InputAdornment } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 import logo from '../../assets/images/restaurante.png';
+import defaultImg from '../../assets/images/default-imagem2.webp';
+import bg from '../../assets/images/bg.jpg';
 import { restauranteService } from '../../services/restauranteService';
 import Navbar from '../../components/navbar/navbar';
 
@@ -22,7 +25,7 @@ const Home = () => {
 
   useEffect(() => {
     const usuario = localStorage.getItem('usuario');
-    setUsuarioLogado(!!usuario); // Converte para booleano (true se existir, false se não)
+    setUsuarioLogado(!!usuario); 
   }, []);
 
   useEffect(() => {
@@ -54,17 +57,31 @@ const Home = () => {
   };
 
   return (
+
     <div className="home-page">
       <Navbar />
 
       <div className="content" style={{ padding: '20px' }}>
       <TextField
-              placeholder="Pesquisar..."
-              variant="outlined"
-              size="small"
-              style={{ width: '200px' }}
-              onChange={handlePesquisa}
-            />
+          placeholder="Pesquisar..."
+          variant="outlined"
+          size="small"
+          style={{
+            width: '100%', 
+            backgroundColor: '#e7efee',
+            borderRadius: '8px',
+            padding: '5px',
+            marginBottom: '20px', 
+          }}
+          onChange={handlePesquisa}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon sx={{ color: '#9c1d0e' }} />
+              </InputAdornment>
+            ),
+          }}
+        />
         {erro && (
           <Typography variant="h6" color="error" align="center">
             {erro}
@@ -77,22 +94,44 @@ const Home = () => {
           </Typography>
         ) : (
           <Grid container spacing={3}>
-            {restaurantesFiltrados.map((restaurante) => (
-              <Grid item xs={12} sm={6} md={4} key={restaurante.idRestaurante}>
-                <Card
-                  style={{ cursor: 'pointer', transition: 'transform 0.2s', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}
-                  onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.05)')}
-                  onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
-                  onClick={() => navigate(`/avaliacoes/${restaurante.idRestaurante}`)}
-                >
-                  <CardContent>
-                    <Typography variant="h5">{restaurante.nomeRestaurante}</Typography>
-                    <Typography variant="body2" color="text.secondary">{restaurante.endereco}</Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
+  {restaurantesFiltrados.map((restaurante) => (
+    <Grid item xs={12} sm={6} md={4} key={restaurante.idRestaurante}>
+      <Card
+        sx={{
+          fontFamily: "League Spartan",
+          cursor: 'pointer',
+          transition: 'transform 0.3s, box-shadow 0.3s',
+          boxShadow: '0 4px 10px rgba(0,0,0,0.4)',
+          borderRadius: 5,
+        }}
+        onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.05)')}
+        onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+        onClick={() => navigate(`/avaliacoes/${restaurante.idRestaurante}`)}
+      >
+        <Box
+          sx={{
+            width: '100%',
+            height: 150,
+            backgroundImage: `url(${defaultImg})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            borderTopLeftRadius: 8,
+            borderTopRightRadius: 8,
+          }}
+        ></Box>
+
+        <CardContent sx={{ padding: 3 }}>
+          <Typography color="#1b1b1b" variant="h6" sx={{ fontWeight: 'bold', fontFamily: 'League Spartan', textTransform: 'uppercase' }}>
+            {restaurante.nomeRestaurante}
+          </Typography>
+          <Typography variant="body2" color="#1b1b1b" sx={{ marginTop: 1, fontFamily: "League Spartan", }}>
+            {restaurante.endereco}
+          </Typography>
+        </CardContent>
+      </Card>
+    </Grid>
+  ))}
+</Grid>
         )}
       </div>
     </div>
