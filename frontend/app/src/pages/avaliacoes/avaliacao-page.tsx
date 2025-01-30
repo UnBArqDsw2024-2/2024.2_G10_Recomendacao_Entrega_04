@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Container, Typography, Card, CardContent, Grid, Box } from '@mui/material';
+import { Container, Typography, Card, CardContent, Grid, Box, TextField, Button, Rating } from '@mui/material';
 import { restauranteService } from '../../services/restauranteService';
 
 interface Avaliacao {
@@ -25,28 +25,27 @@ const AvaliacaoPage = () => {
   const [mediaNota, setMediaNota] = useState<number | null>(null);
   const [restaurante, setRestaurante] = useState<Restaurante | null>(null);
 
+  const [novaAvaliacao, setNovaAvaliacao] = useState<string>('');
+  const [nota, setNota] = useState<number | null>(null);
+
   useEffect(() => {
     const fetchAvaliacoes = async () => {
       try {
-        // Buscar avaliações do restaurante
+        const restaurantes = await restauranteService.listar();
+        const restauranteEncontrado = restaurantes.find(r => r.idRestaurante === Number(idRestaurante));
+        setRestaurante(restauranteEncontrado ?? null);
+
         const response = await fetch(`http://localhost:8080/avaliacao/restaurante?idRestaurante=${idRestaurante}`);
         if (!response.ok) throw new Error('Erro ao buscar avaliações');
         const dados = await response.json();
         setAvaliacoes(dados);
 
-        // Calcular média das avaliações
         if (dados.length > 0) {
           const somaNotas = dados.reduce((acc: number, avaliacao: Avaliacao) => acc + avaliacao.nota, 0);
           setMediaNota(somaNotas / dados.length);
         } else {
           setMediaNota(null);
         }
-
-        // Buscar dados do restaurante
-        const restaurantes = await restauranteService.listar();
-        const restauranteEncontrado = restaurantes.find(r => r.idRestaurante === Number(idRestaurante));
-        setRestaurante(restauranteEncontrado ?? null); // 🔹 Corrigido para evitar erro
-
       } catch (error) {
         console.error(error);
       }
@@ -54,6 +53,38 @@ const AvaliacaoPage = () => {
 
     fetchAvaliacoes();
   }, [idRestaurante]);
+
+  const handleEnviarAvaliacao = async () => {
+    if (!novaAvaliacao.trim() || nota === null) {
+      alert('Preencha todos os campos antes de enviar.');
+      return;
+    }
+
+    try {
+      const nova = {
+        texto: novaAvaliacao,
+        urlVideo: '',
+        urlImagen: '',
+        nota,
+        idRestarante: Number(idRestaurante),
+        idCliente: 0,
+      };
+
+      const response = await fetch(`http://localhost:8080/avaliacao/createAvaliacao`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(nova),
+      });
+
+      if (!response.ok) throw new Error('Erro ao enviar avaliação');
+
+      setAvaliacoes((prev) => [...prev, { idAvaliacao: Date.now(), ...nova }]);
+      setNovaAvaliacao('');
+      setNota(null);
+    } catch (error) {
+      console.error('Erro ao enviar avaliação:', error);
+    }
+  };
 
   return (
     <Container>
@@ -94,6 +125,30 @@ const AvaliacaoPage = () => {
           </Grid>
         ))}
       </Grid>
+
+      {/* Campo para adicionar nova avaliação */}
+      <Box sx={{ marginTop: 3, textAlign: 'center' }}>
+        <Typography variant="h6">Deixe sua Avaliação</Typography>
+        <Rating
+          name="nota"
+          value={nota}
+          onChange={(_, newValue) => setNota(newValue)}
+          sx={{ marginBottom: 2 }}
+        />
+        <TextField
+          fullWidth
+          multiline
+          minRows={3}
+          variant="outlined"
+          label="Escreva sua avaliação"
+          value={novaAvaliacao}
+          onChange={(e) => setNovaAvaliacao(e.target.value)}
+          sx={{ marginBottom: 2 }}
+        />
+        <Button variant="contained" color="primary" onClick={handleEnviarAvaliacao}>
+          Enviar Avaliação
+        </Button>
+      </Box>
     </Container>
   );
 };
