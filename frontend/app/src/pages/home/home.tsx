@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { AppBar, Toolbar, Button, Card, CardContent, Typography, Grid, TextField, Box } from '@mui/material';
 import logo from '../../assets/images/restaurante.png';
 import { restauranteService } from '../../services/restauranteService';
+import Navbar from '../../components/navbar/navbar';
 
 interface Restaurante {
   idRestaurante: number;
@@ -16,6 +17,13 @@ const Home = () => {
   const [restaurantesFiltrados, setRestaurantesFiltrados] = useState<Restaurante[]>([]);
   const [erro, setErro] = useState<string | null>(null);
   const [termoPesquisa, setTermoPesquisa] = useState<string>('');
+
+  const [usuarioLogado, setUsuarioLogado] = useState<boolean>(false);
+
+  useEffect(() => {
+    const usuario = localStorage.getItem('usuario');
+    setUsuarioLogado(!!usuario); // Converte para booleano (true se existir, false se não)
+  }, []);
 
   useEffect(() => {
     const fetchRestaurantes = async () => {
@@ -31,7 +39,6 @@ const Home = () => {
     fetchRestaurantes();
   }, []);
 
-  // Função para filtrar os restaurantes conforme a pesquisa
   const handlePesquisa = (e: React.ChangeEvent<HTMLInputElement>) => {
     const termo = e.target.value.toLowerCase();
     setTermoPesquisa(termo);
@@ -48,25 +55,16 @@ const Home = () => {
 
   return (
     <div className="home-page">
-      <AppBar position="static" color="default" style={{ padding: '0 20px' }}>
-        <Toolbar style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <img src={logo} alt="Logo" style={{ height: 50 }} />
-          <Box display="flex" alignItems="center" gap={2}>
-            <TextField
+      <Navbar />
+
+      <div className="content" style={{ padding: '20px' }}>
+      <TextField
               placeholder="Pesquisar..."
               variant="outlined"
               size="small"
-              value={termoPesquisa}
-              onChange={handlePesquisa}
               style={{ width: '200px' }}
+              onChange={handlePesquisa}
             />
-            <Button variant="contained" color="primary" onClick={() => navigate('/cadastro')}>Cadastrar</Button>
-            <Button variant="outlined" color="primary" onClick={() => navigate('/signin')}>Login</Button>
-          </Box>
-        </Toolbar>
-      </AppBar>
-
-      <div className="content" style={{ padding: '20px' }}>
         {erro && (
           <Typography variant="h6" color="error" align="center">
             {erro}

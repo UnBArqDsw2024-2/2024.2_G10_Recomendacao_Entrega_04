@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Box, AppBar, Toolbar, TextField, Button, Typography, Alert } from '@mui/material';
 import logo from '../../assets/images/restaurante.png';
+import Navbar from '../../components/navbar/navbar';
 
 function SignInPage() {
   const navigate = useNavigate();
@@ -25,6 +26,8 @@ function SignInPage() {
       const clienteResponse = await fetch(`http://localhost:8080/cliente/email?email=${formData.email}`);
       if (clienteResponse.ok) {
         userData = await clienteResponse.json();
+        const idCliente = userData.idCliente; 
+      localStorage.setItem('usuario', JSON.stringify({ idCliente })); 
         tipoUsuario = 'cliente';
       }
 
@@ -32,6 +35,8 @@ function SignInPage() {
         const funcionarioResponse = await fetch(`http://localhost:8080/funcionario/email?email=${formData.email}`);
         if (funcionarioResponse.ok) {
           userData = await funcionarioResponse.json();
+          const idFuncionario = userData.idFuncionario; 
+          localStorage.setItem('usuario', JSON.stringify({ idFuncionario })); 
           tipoUsuario = 'funcionario';
         }
       }
@@ -44,7 +49,10 @@ function SignInPage() {
         throw new Error('Senha incorreta');
       }
 
+      
+
       setSuccess(true);
+
 
       navigate(tipoUsuario === 'cliente' ? '/home-cliente' : '/home-funcionario');
     } catch (err: any) {
@@ -54,16 +62,7 @@ function SignInPage() {
 
   return (
     <div className="signin-page">
-      <AppBar position="static" color="default" style={{ padding: '0 20px' }}>
-        <Toolbar style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <img src={logo} alt="Logo" style={{ height: 50 }} />
-          <Box display="flex" alignItems="center" gap={2}>
-            <Button variant="contained" color="primary" onClick={() => navigate('/cadastro')}>
-              Cadastrar
-            </Button>
-          </Box>
-        </Toolbar>
-      </AppBar>
+      <Navbar />
 
       <Container component="main" maxWidth="xs" sx={{ marginTop: 15 }}>
         <Box 

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container, Typography, Card, CardContent, Grid, Box, TextField, Button, Rating } from '@mui/material';
 import { restauranteService } from '../../services/restauranteService';
+import Navbar from '../../components/navbar/navbar';
 
 interface Avaliacao {
   idAvaliacao: number;
@@ -61,13 +62,17 @@ const AvaliacaoPage = () => {
     }
 
     try {
+
+      const usuario = JSON.parse(localStorage.getItem('usuario') || '{}'); 
+      const idCliente = usuario.idCliente;
+
       const nova = {
         texto: novaAvaliacao,
         urlVideo: '',
         urlImagen: '',
         nota,
         idRestarante: Number(idRestaurante),
-        idCliente: 0,
+        idCliente: idCliente,
       };
 
       const response = await fetch(`http://localhost:8080/avaliacao/createAvaliacao`, {
@@ -87,7 +92,9 @@ const AvaliacaoPage = () => {
   };
 
   return (
-    <Container>
+    <>
+      <Navbar />
+      <Container>
       {restaurante && (
         <>
           <Typography variant="h4" sx={{ textAlign: 'center', marginTop: 2 }}>
@@ -149,7 +156,8 @@ const AvaliacaoPage = () => {
           Enviar Avaliação
         </Button>
       </Box>
-    </Container>
+      </Container>
+    </>
   );
 };
 

@@ -1,7 +1,14 @@
 import React from 'react';
+import Navbar from '../../components/navbar/navbar';
 
-function HomeFuncionario() {
-  return <h1>Bem-vindo à Home do Funcionário</h1>;
-}
+const HomeFuncionario: React.FC = () => {
+  return (
+    <div>
+      <Navbar />
+      <h1>Bem-vindo ao Home Funcionario</h1>
+      {/* Outras partes do componente */}
+    </div>
+  );
+};
 
 export default HomeFuncionario;

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Box, AppBar, Toolbar, TextField, Button, Typography, MenuItem, Select, FormControl, InputLabel, SelectChangeEvent } from '@mui/material';
 import logo from '../../assets/images/restaurante.png';
+import Navbar from '../../components/navbar/navbar';
 
 function CadastroPage() {
   const navigate = useNavigate();
@@ -67,6 +68,9 @@ function CadastroPage() {
 
       if (!response.ok) throw new Error('Erro ao cadastrar usuário');
 
+      const responseData = await response.json();
+      const idCliente = responseData.idCliente; 
+      localStorage.setItem('usuario', JSON.stringify({ idCliente })); 
       navigate('/');
     } catch (err: any) {
       setError(err.message);
@@ -75,16 +79,7 @@ function CadastroPage() {
 
   return (
     <div className="cadastro-page">
-      <AppBar position="static" color="default" style={{ padding: '0 20px' }}>
-        <Toolbar style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <img src={logo} alt="Logo" style={{ height: 50 }} />
-          <Box display="flex" alignItems="center" gap={2}>
-            <Button variant="outlined" color="primary" onClick={() => navigate('/signin')}>
-              Login
-            </Button>
-          </Box>
-        </Toolbar>
-      </AppBar>
+      <Navbar />
 
       <Container component="main" maxWidth="xs" sx={{ marginTop: 10 }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: 3, backgroundColor: 'white', borderRadius: 2, boxShadow: 3 }}>
