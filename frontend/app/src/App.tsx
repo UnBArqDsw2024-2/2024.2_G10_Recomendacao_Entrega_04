@@ -16,8 +16,8 @@ function App() {
         <Route path="/signin" element={<SignIn />} />
         <Route path="/restaurante" element={<SignIn />} />
         <Route path="/cadastro" element={<CadastroPage />} />
-        <Route path="/home-cliente" element={<HomeCliente />} /> 
-        <Route path="/home-funcionario" element={<HomeFuncionario />} />
+        <Route path="/home-cliente/:idCliente" element={<HomeCliente />} /> 
+        <Route path="/home-funcionario/:idFuncionario" element={<HomeFuncionario />} />
         <Route path="/avaliacoes/:idRestaurante" element={<AvaliacaoPage />} />
         <Route path="/cadastrar-restaurante" element={<CadastrarRestaurante />} />
       </Routes>

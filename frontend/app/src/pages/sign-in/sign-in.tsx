@@ -55,8 +55,7 @@ function SignInPage() {
 
       setSuccess(true);
 
-
-      navigate(tipoUsuario === 'cliente' ? '/home-cliente' : '/home-funcionario');
+      navigate(tipoUsuario === 'cliente' ? `/home-cliente/${userData.idCliente}` : `/home-funcionario/${userData.idFuncionario}`);
     } catch (err: any) {
       setError(err.message);
     }
