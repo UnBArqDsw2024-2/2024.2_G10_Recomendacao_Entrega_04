@@ -69,8 +69,9 @@ function CadastroPage() {
       if (!response.ok) throw new Error('Erro ao cadastrar usuário');
 
       const responseData = await response.json();
-      const idCliente = responseData.idCliente; 
+      const idCliente = responseData.idCliente || responseData.idFuncionario; 
       localStorage.setItem('usuario', JSON.stringify({ idCliente })); 
+      localStorage.setItem('tipo', tipoUsuario); 
       navigate('/');
     } catch (err: any) {
       setError(err.message);

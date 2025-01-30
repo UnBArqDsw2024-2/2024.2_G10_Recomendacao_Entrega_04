@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { Container, Typography, Card, CardContent, Grid, Box, TextField, Button, Rating } from '@mui/material';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Container, Typography, Card, CardContent, Grid, Box, TextField, Button, Rating, Modal } from '@mui/material';
 import { restauranteService } from '../../services/restauranteService';
 import Navbar from '../../components/navbar/navbar';
 
@@ -10,7 +10,7 @@ interface Avaliacao {
   urlVideo: string;
   urlImagen: string;
   nota: number;
-  idRestarante: number;
+  idRestaurante: number;
   idCliente: number;
 }
 
@@ -25,6 +25,8 @@ const AvaliacaoPage = () => {
   const [avaliacoes, setAvaliacoes] = useState<Avaliacao[]>([]);
   const [mediaNota, setMediaNota] = useState<number | null>(null);
   const [restaurante, setRestaurante] = useState<Restaurante | null>(null);
+  const [openModal, setOpenModal] = useState(false);
+  const navigate = useNavigate();
 
   const [novaAvaliacao, setNovaAvaliacao] = useState<string>('');
   const [nota, setNota] = useState<number | null>(null);
@@ -61,20 +63,24 @@ const AvaliacaoPage = () => {
       return;
     }
 
+    const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
+    if (!usuario || !usuario.idCliente) {
+      // Exibe o modal para o usuário não logado
+      setOpenModal(true);
+      return;
+    }
+
+    const idCliente = usuario.idCliente;
+    const nova = {
+      texto: novaAvaliacao,
+      urlVideo: '',
+      urlImagen: '',
+      nota,
+      idRestaurante: Number(idRestaurante),
+      idCliente: idCliente,
+    };
+
     try {
-
-      const usuario = JSON.parse(localStorage.getItem('usuario') || '{}'); 
-      const idCliente = usuario.idCliente;
-
-      const nova = {
-        texto: novaAvaliacao,
-        urlVideo: '',
-        urlImagen: '',
-        nota,
-        idRestarante: Number(idRestaurante),
-        idCliente: idCliente,
-      };
-
       const response = await fetch(`http://localhost:8080/avaliacao/createAvaliacao`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -91,9 +97,49 @@ const AvaliacaoPage = () => {
     }
   };
 
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
+  
+
   return (
     <>
       <Navbar />
+
+      <Modal open={openModal} onClose={handleCloseModal}>
+        <Box 
+          sx={{
+            display: 'flex', 
+            flexDirection: 'column', 
+            justifyContent: 'center', 
+            alignItems: 'center', 
+            position: 'absolute', 
+            top: '50%', 
+            left: '50%', 
+            transform: 'translate(-50%, -50%)', 
+            width: 300, 
+            padding: 2, 
+            backgroundColor: 'white', 
+            borderRadius: 2,
+            boxShadow: 3
+          }}
+        >
+          <Typography variant="h6" gutterBottom>
+            Você precisa estar logado para enviar uma avaliação.
+          </Typography>
+          <Button variant="contained" color="primary" onClick={() => navigate('/cadastro')}>
+            Cadastro
+          </Button>
+            <Typography variant="body2" mt={3}>Já possui uma conta?</Typography>
+          <Button variant="contained" color="primary" onClick={() => navigate('/signin')}>
+            Login
+          </Button>
+          <Button variant="outlined" color="secondary" onClick={handleCloseModal} style={{ marginTop: '10px' }}>
+            Fechar
+          </Button>
+        </Box>
+      </Modal>
+
       <Container>
       {restaurante && (
         <>

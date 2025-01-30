@@ -28,6 +28,7 @@ function SignInPage() {
         userData = await clienteResponse.json();
         const idCliente = userData.idCliente; 
       localStorage.setItem('usuario', JSON.stringify({ idCliente })); 
+      localStorage.setItem('tipo', 'cliente');
         tipoUsuario = 'cliente';
       }
 
@@ -35,8 +36,9 @@ function SignInPage() {
         const funcionarioResponse = await fetch(`http://localhost:8080/funcionario/email?email=${formData.email}`);
         if (funcionarioResponse.ok) {
           userData = await funcionarioResponse.json();
-          const idFuncionario = userData.idFuncionario; 
-          localStorage.setItem('usuario', JSON.stringify({ idFuncionario })); 
+          const idCliente = userData.idFuncionario; 
+          localStorage.setItem('usuario', JSON.stringify({ idCliente })); 
+          localStorage.setItem('tipo', 'funcionario');
           tipoUsuario = 'funcionario';
         }
       }
