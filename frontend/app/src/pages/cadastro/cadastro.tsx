@@ -1,8 +1,20 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, Box, AppBar, Toolbar, TextField, Button, Typography, MenuItem, Select, FormControl, InputLabel, SelectChangeEvent } from '@mui/material';
-import logo from '../../assets/images/restaurante.png';
+import { Container, Box, TextField, Button, Typography, MenuItem, Select, FormControl, InputLabel, SelectChangeEvent, Autocomplete } from '@mui/material';
 import Navbar from '../../components/navbar/navbar';
+
+const estadosBrasileiros = [
+  { sigla: "AC", nome: "Acre" }, { sigla: "AL", nome: "Alagoas" }, { sigla: "AP", nome: "Amapá" },
+  { sigla: "AM", nome: "Amazonas" }, { sigla: "BA", nome: "Bahia" }, { sigla: "CE", nome: "Ceará" },
+  { sigla: "DF", nome: "Distrito Federal" }, { sigla: "ES", nome: "Espírito Santo" }, { sigla: "GO", nome: "Goiás" },
+  { sigla: "MA", nome: "Maranhão" }, { sigla: "MT", nome: "Mato Grosso" }, { sigla: "MS", nome: "Mato Grosso do Sul" },
+  { sigla: "MG", nome: "Minas Gerais" }, { sigla: "PA", nome: "Pará" }, { sigla: "PB", nome: "Paraíba" },
+  { sigla: "PR", nome: "Paraná" }, { sigla: "PE", nome: "Pernambuco" }, { sigla: "PI", nome: "Piauí" },
+  { sigla: "RJ", nome: "Rio de Janeiro" }, { sigla: "RN", nome: "Rio Grande do Norte" }, { sigla: "RS", nome: "Rio Grande do Sul" },
+  { sigla: "RO", nome: "Rondônia" }, { sigla: "RR", nome: "Roraima" }, { sigla: "SC", nome: "Santa Catarina" },
+  { sigla: "SP", nome: "São Paulo" }, { sigla: "SE", nome: "Sergipe" }, { sigla: "TO", nome: "Tocantins" }
+];
+
 
 function CadastroPage() {
   const navigate = useNavigate();
@@ -33,6 +45,10 @@ function CadastroPage() {
       cargo: '',
       telefone: '',
     });
+  };
+
+  const handleUFChange = (event: any, newValue: { sigla: string; nome: string } | null) => {
+    setFormData({ ...formData, unFederacao: newValue ? newValue.sigla : '' });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -88,10 +104,14 @@ function CadastroPage() {
          }}>
           <Typography variant="h5">CADASTRE-SE</Typography>
 
-
           <FormControl fullWidth margin="normal">
-            <InputLabel>Tipo de Usuário</InputLabel>
-            <Select value={tipoUsuario} onChange={handleTipoUsuarioChange}>
+            <InputLabel htmlFor="tipo-usuario">Tipo de Usuário</InputLabel>
+            <Select
+              id="tipo-usuario"
+              value={tipoUsuario}
+              onChange={handleTipoUsuarioChange}
+              label="Tipo de Usuário"
+            >
               <MenuItem value="cliente">Cliente</MenuItem>
               <MenuItem value="funcionario">Funcionário</MenuItem>
             </Select>
@@ -102,10 +122,15 @@ function CadastroPage() {
             <TextField fullWidth margin="normal" label="Email" type="email" name="email" value={formData.email} onChange={handleChange} required />
             <TextField fullWidth margin="normal" label="Senha" type="password" name="senha" value={formData.senha} onChange={handleChange} required />
 
-
             {tipoUsuario === 'cliente' && (
               <>
-                <TextField fullWidth margin="normal" label="UF" name="unFederacao" value={formData.unFederacao} onChange={handleChange} required />
+                <Autocomplete
+                  fullWidth
+                  options={estadosBrasileiros}
+                  getOptionLabel={(option) => `${option.nome} (${option.sigla})`}
+                  onChange={handleUFChange}
+                  renderInput={(params) => <TextField {...params} label="UF" margin="normal" />}
+                />
                 <TextField fullWidth margin="normal" label="Cidade" name="cidade" value={formData.cidade} onChange={handleChange} required />
               </>
             )}
