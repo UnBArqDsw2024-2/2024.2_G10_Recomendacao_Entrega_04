@@ -106,7 +106,7 @@ const HomeCliente: React.FC = () => {
             {avaliacoes.map((avaliacao) => {
               const restaurante = restaurantes[avaliacao.idRestaurante];
               const enderecoCurto =
-                restaurante?.endereco?.length > 20 ? restaurante.endereco.slice(0, 20) + '...' : restaurante?.endereco;
+                restaurante?.endereco?.length > 40 ? restaurante.endereco.slice(0, 40) + '...' : restaurante?.endereco;
 
               return (
                 <Grid item xs={12} sm={6} md={4} key={avaliacao.idAvaliacao}>
