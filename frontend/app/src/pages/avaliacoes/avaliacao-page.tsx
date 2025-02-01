@@ -198,7 +198,7 @@ const AvaliacaoPage = () => {
                     </Box>
                   )}
                   <Typography variant="h6" color="primary" sx={{ marginTop: 2 }}>
-                    Nota: {avaliacao.nota.toFixed(2)}
+                    Nota: {avaliacao.nota.toFixed(2)} ⭐
                   </Typography>
                 </CardContent>
               </Card>
