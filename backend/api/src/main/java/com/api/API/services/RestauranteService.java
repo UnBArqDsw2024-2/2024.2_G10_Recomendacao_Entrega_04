@@ -33,4 +33,8 @@ public class RestauranteService {
     public Optional<Restaurante> getRestauranteByNome(String nomeRestaurante) {
         return restauranteRepository.findFirstByNomeRestaurante(nomeRestaurante);
     }
+
+    public Optional<Restaurante> getRestauranteById(Integer idRestaurante) {
+        return restauranteRepository.findById(idRestaurante);
+    }
 }

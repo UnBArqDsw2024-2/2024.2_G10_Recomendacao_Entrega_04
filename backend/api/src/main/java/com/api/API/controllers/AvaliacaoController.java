@@ -39,4 +39,14 @@ public class AvaliacaoController {
         }
         return ResponseEntity.ok(avaliacoes);
     }
+
+    @GetMapping("/cliente")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<List<Avaliacao>> getAvaliacoesByCliente(@RequestParam Integer idCliente) {
+        List<Avaliacao> avaliacoes = avaliacaoService.getAvaliacoesByCliente(idCliente);
+        if (avaliacoes.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(avaliacoes);
+    }
 }
