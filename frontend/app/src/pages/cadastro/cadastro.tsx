@@ -15,7 +15,6 @@ const estadosBrasileiros = [
   { sigla: "SP", nome: "São Paulo" }, { sigla: "SE", nome: "Sergipe" }, { sigla: "TO", nome: "Tocantins" }
 ];
 
-
 function CadastroPage() {
   const navigate = useNavigate();
   const [tipoUsuario, setTipoUsuario] = useState<string>('cliente');
@@ -85,8 +84,12 @@ function CadastroPage() {
       if (!response.ok) throw new Error('Erro ao cadastrar usuário');
 
       const responseData = await response.json();
-      const idCliente = responseData.idCliente || responseData.idFuncionario; 
-      localStorage.setItem('usuario', JSON.stringify({ idCliente })); 
+      
+      const usuarioData = tipoUsuario === 'cliente' 
+        ? { idCliente: responseData.idCliente }
+        : { idFuncionario: responseData.idFuncionario };
+
+      localStorage.setItem('usuario', JSON.stringify(usuarioData)); 
       localStorage.setItem('tipo', tipoUsuario); 
       navigate('/');
     } catch (err: any) {

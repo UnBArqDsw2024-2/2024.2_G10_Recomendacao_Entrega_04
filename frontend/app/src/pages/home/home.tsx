@@ -121,7 +121,7 @@ const Home = () => {
         ></Box>
 
         <CardContent sx={{ padding: 3 }}>
-          <Typography color="#1b1b1b" variant="h6" sx={{ fontWeight: 'bold', fontFamily: 'League Spartan', textTransform: 'uppercase' }}>
+          <Typography color="#1b1b1b" variant="h6" sx={{ fontWeight: 'bold', fontFamily: 'League Spartan', textTransform: 'uppercase', color: '#9c1d0e' }}>
             {restaurante.nomeRestaurante}
           </Typography>
           <Typography variant="body2" color="#1b1b1b" sx={{ marginTop: 1, fontFamily: "League Spartan", }}>

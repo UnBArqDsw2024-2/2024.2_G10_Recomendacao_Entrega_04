@@ -41,5 +41,11 @@ public class FuncionarioController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-
+    @GetMapping("/id")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<Funcionario> getFuncionarioById(@RequestParam Integer idFuncionario) {
+        return funcionarioService.getFuncionarioById(idFuncionario)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
 }

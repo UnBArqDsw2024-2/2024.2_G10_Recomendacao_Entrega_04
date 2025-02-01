@@ -28,4 +28,8 @@ public class AvaliacaoService {
                 avaliacao.getUrlImagen(), avaliacao.getNota(), avaliacao.getIdRestarante(), avaliacao.getIdCliente());
         return avaliacaoRepository.save(avaliacao);
     }
+
+    public List<Avaliacao> getAvaliacoesByCliente(Integer idCliente) {
+        return avaliacaoRepository.findByIdCliente(idCliente);
+    }
 }
