@@ -37,4 +37,9 @@ public class RestauranteService {
     public Optional<Restaurante> getRestauranteById(Integer idRestaurante) {
         return restauranteRepository.findById(idRestaurante);
     }
+
+    public List<Restaurante> getRestaurantesByFuncionario(Integer idFuncionario) {
+        return restauranteRepository.findByIdFuncionario(idFuncionario);
+    }
+
 }

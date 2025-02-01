@@ -65,20 +65,21 @@ const AvaliacaoPage = () => {
 
     const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
     if (!usuario || !usuario.idCliente) {
-      // Exibe o modal para o usuário não logado
       setOpenModal(true);
       return;
     }
 
     const idCliente = usuario.idCliente;
+
     const nova = {
       texto: novaAvaliacao,
       urlVideo: '',
       urlImagen: '',
       nota,
-      idRestaurante: Number(idRestaurante),
+      idRestarante: Number(idRestaurante),
       idCliente: idCliente,
     };
+
 
     try {
       const response = await fetch(`http://localhost:8080/avaliacao/createAvaliacao`, {
@@ -89,7 +90,7 @@ const AvaliacaoPage = () => {
 
       if (!response.ok) throw new Error('Erro ao enviar avaliação');
 
-      setAvaliacoes((prev) => [...prev, { idAvaliacao: Date.now(), ...nova }]);
+      setAvaliacoes((prev) => [...prev, { idAvaliacao: Date.now(), ...nova, idRestaurante: Number(idRestaurante) }]);
       setNovaAvaliacao('');
       setNota(null);
     } catch (error) {
@@ -127,7 +128,7 @@ const AvaliacaoPage = () => {
           }}
         >
           <Typography variant="h6" gutterBottom>
-            Você precisa estar logado para enviar uma avaliação.
+            Você precisa estar logado como Cliente para enviar uma avaliação.
           </Typography>
           <Button
             variant="contained"

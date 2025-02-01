@@ -46,4 +46,15 @@ public class RestauranteController {
         return restaurante.map(ResponseEntity::ok)
                         .orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    @GetMapping("/funcionario")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<List<Restaurante>> getRestaurantesByFuncionario(@RequestParam Integer idFuncionario) {
+        List<Restaurante> restaurantes = restauranteService.getRestaurantesByFuncionario(idFuncionario);
+        if (restaurantes.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(restaurantes);
+    }
+
 }
