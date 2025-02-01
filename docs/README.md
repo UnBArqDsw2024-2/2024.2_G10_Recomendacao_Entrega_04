@@ -1,4 +1,4 @@
-# Chef Indica 🐭
+# Chef Indica 👨‍🍳
 
 **Código da Disciplina**: FGA0208<br>
 **Número do Grupo**: 10<br>

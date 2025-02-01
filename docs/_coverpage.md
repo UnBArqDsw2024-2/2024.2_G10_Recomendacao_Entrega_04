@@ -1,5 +1,5 @@
 
-![logo](./imagens/logo.png)
+![logo](./imagens/restaurante.png)
 
 # Descubra seu próximo restaurante favorito!
 
