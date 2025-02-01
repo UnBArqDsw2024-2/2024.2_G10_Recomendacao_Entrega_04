@@ -31,4 +31,9 @@ public class FuncionarioService {
     public Optional<Funcionario> getFuncionarioByEmail(String email) {
         return funcionarioRepository.findFirstByEmail(email);
     }
+
+    public Optional<Funcionario> getFuncionarioById(Integer id) {
+        return funcionarioRepository.findById(id);
+    }
+
 }

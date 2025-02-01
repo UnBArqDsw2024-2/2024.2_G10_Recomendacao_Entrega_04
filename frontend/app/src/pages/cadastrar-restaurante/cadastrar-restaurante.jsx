@@ -17,12 +17,12 @@ const CadastrarRestaurante = () => {
     let idCliente = null;
     let idFuncionario = null;
 
-    if (tipoCliente === 'cliente') {
-      idCliente = usuario.idCliente;
-      idFuncionario = null;
-    } else {
+    if (tipoCliente === 'funcionario') {
       idCliente = null;
-      idFuncionario = usuario.idCliente;
+      idFuncionario = usuario.idFuncionario;
+    } else {
+      navigate("/"); // Se não for funcionário, redireciona para a página inicial
+      return;
     }
 
     const url = 'http://localhost:8080/restaurante/createRestaurante';

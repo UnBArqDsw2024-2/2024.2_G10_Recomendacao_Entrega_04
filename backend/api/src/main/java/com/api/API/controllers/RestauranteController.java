@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/restaurante")
@@ -23,7 +24,6 @@ public class RestauranteController {
         return ResponseEntity.ok(restauranteService.getAllRestaurantes());
     }
 
-
     @PostMapping("/createRestaurante")
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<Restaurante> createRestaurante(@RequestBody Restaurante restaurante) {
@@ -38,4 +38,23 @@ public class RestauranteController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+
+    @GetMapping("/id")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<Restaurante> getRestauranteById(@RequestParam Integer idRestaurante) {
+        Optional<Restaurante> restaurante = restauranteService.getRestauranteById(idRestaurante);
+        return restaurante.map(ResponseEntity::ok)
+                        .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/funcionario")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public ResponseEntity<List<Restaurante>> getRestaurantesByFuncionario(@RequestParam Integer idFuncionario) {
+        List<Restaurante> restaurantes = restauranteService.getRestaurantesByFuncionario(idFuncionario);
+        if (restaurantes.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(restaurantes);
+    }
+
 }

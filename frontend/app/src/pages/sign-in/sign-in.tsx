@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, Box, AppBar, Toolbar, TextField, Button, Typography, Alert } from '@mui/material';
-import logo from '../../assets/images/restaurante.png';
+import { Container, Box, TextField, Button, Typography, Alert } from '@mui/material';
 import Navbar from '../../components/navbar/navbar';
 
 function SignInPage() {
@@ -27,8 +26,8 @@ function SignInPage() {
       if (clienteResponse.ok) {
         userData = await clienteResponse.json();
         const idCliente = userData.idCliente; 
-      localStorage.setItem('usuario', JSON.stringify({ idCliente })); 
-      localStorage.setItem('tipo', 'cliente');
+        localStorage.setItem('usuario', JSON.stringify({ idCliente })); 
+        localStorage.setItem('tipo', 'cliente');
         tipoUsuario = 'cliente';
       }
 
@@ -36,8 +35,8 @@ function SignInPage() {
         const funcionarioResponse = await fetch(`http://localhost:8080/funcionario/email?email=${formData.email}`);
         if (funcionarioResponse.ok) {
           userData = await funcionarioResponse.json();
-          const idCliente = userData.idFuncionario; 
-          localStorage.setItem('usuario', JSON.stringify({ idCliente })); 
+          const idFuncionario = userData.idFuncionario; 
+          localStorage.setItem('usuario', JSON.stringify({ idFuncionario })); 
           localStorage.setItem('tipo', 'funcionario');
           tipoUsuario = 'funcionario';
         }
@@ -51,11 +50,14 @@ function SignInPage() {
         throw new Error('Senha incorreta');
       }
 
-      
-
       setSuccess(true);
 
-      navigate(tipoUsuario === 'cliente' ? `/home-cliente/${userData.idCliente}` : `/home-funcionario/${userData}`);
+      if (tipoUsuario === 'cliente') {
+        navigate(`/home-cliente/${userData.idCliente}`);
+      } else if (tipoUsuario === 'funcionario') {
+        navigate(`/home-funcionario/${userData.idFuncionario}`);
+      }
+
     } catch (err: any) {
       setError(err.message);
     }
@@ -76,7 +78,6 @@ function SignInPage() {
             borderRadius: 2, 
             boxShadow: 3 ,
             borderColor: '#44a49b', borderStyle: 'solid', borderWidth: 1
-            
           }}
         >
           <Typography variant="h5">Login</Typography>

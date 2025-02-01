@@ -10,4 +10,5 @@ public interface AvaliacaoRepository extends JpaRepository<Avaliacao, Integer> {
 
     List<Avaliacao> findByIdRestarante(Integer idRestarante);
 
+    List<Avaliacao> findByIdCliente(Integer idCliente);
 }
