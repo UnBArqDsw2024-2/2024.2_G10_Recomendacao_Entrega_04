@@ -76,7 +76,7 @@ const AvaliacaoPage = () => {
       urlVideo: '',
       urlImagen: '',
       nota,
-      idRestarante: Number(idRestaurante),
+      idRestaurante: Number(idRestaurante),
       idCliente: idCliente,
     };
 
@@ -125,27 +125,27 @@ const AvaliacaoPage = () => {
             borderRadius: 2,
             boxShadow: 3,
             textAlign: 'center',
+            fontFamily: "League Spartan",
+            border: '2px solid #44a49b',
           }}
         >
-          <Typography variant="h6" gutterBottom>
+          <Typography variant="h6" gutterBottom sx={{ fontFamily: "League Spartan", fontSize: 19 }}>
             Você precisa estar logado como Cliente para enviar uma avaliação.
           </Typography>
           <Button
             variant="contained"
-            color="primary"
+            sx={{ backgroundColor: '#44a49b', marginBottom: 2 }}
             onClick={() => navigate('/cadastro')}
-            sx={{ marginBottom: 2 }}
           >
             Cadastro
           </Button>
-          <Typography variant="body2" mt={3}>
+          <Typography variant="body2" mt={2} sx={{ fontFamily: "League Spartan", fontSize: 19 }}>
             Já possui uma conta?
           </Typography>
           <Button
             variant="contained"
-            color="primary"
+            sx={{ backgroundColor: '#44a49b', marginTop: 1 }}
             onClick={() => navigate('/signin')}
-            sx={{ marginTop: 1 }}
           >
             Login
           </Button>
@@ -164,10 +164,10 @@ const AvaliacaoPage = () => {
         {/* Restaurante Info */}
         {restaurante && (
           <>
-            <Typography variant="h4" sx={{ textAlign: 'center', marginBottom: 2 }}>
+            <Typography variant="h4" sx={{ textAlign: 'center', marginBottom: 2, fontFamily: 'League Spartan', textTransform: 'uppercase', color: '#9c1d0e', fontWeight: 'bold' }}>
               {restaurante.nomeRestaurante}
             </Typography>
-            <Typography variant="subtitle1" sx={{ textAlign: 'center', color: 'text.secondary', marginBottom: 3 }}>
+            <Typography variant="subtitle1" sx={{ textAlign: 'center', color: 'text.secondary', marginBottom: 3, fontFamily: 'League Spartan' }}>
               Endereço: {restaurante.endereco}
             </Typography>
           </>
@@ -175,7 +175,7 @@ const AvaliacaoPage = () => {
 
         {/* Média das Avaliações */}
         {mediaNota !== null && (
-          <Typography variant="h6" sx={{ textAlign: 'center', marginBottom: 3 }}>
+          <Typography variant="h6" sx={{ textAlign: 'center', marginBottom: 3, fontFamily: 'League Spartan' }}>
             Média das Avaliações: {mediaNota.toFixed(2)} ⭐
           </Typography>
         )}
@@ -184,7 +184,10 @@ const AvaliacaoPage = () => {
         <Grid container spacing={3} sx={{ marginTop: 3 }}>
           {avaliacoes.map((avaliacao) => (
             <Grid item xs={12} sm={6} md={4} key={avaliacao.idAvaliacao}>
-              <Card sx={{ boxShadow: 3, borderRadius: 2 }}>
+              <Card sx={{ fontFamily: 'League Spartan',
+                      transition: 'transform 0.3s, box-shadow 0.3s',
+                      boxShadow: '0 4px 10px rgba(0,0,0,0.4)',
+                      borderRadius: 5, }}>
                 <CardContent>
                   <Typography variant="body1" sx={{ marginBottom: 2 }}>
                     {avaliacao.texto}
@@ -208,8 +211,8 @@ const AvaliacaoPage = () => {
 
         {/* Campo para adicionar nova avaliação */}
         <Box sx={{ marginTop: 3, textAlign: 'center' }}>
-          <Typography variant="h6" sx={{ marginBottom: 2 }}>
-            Deixe sua Avaliação
+          <Typography variant="h6" sx={{ marginBottom: 2, fontFamily: 'League Spartan' }}>
+            Deixe sua avaliação
           </Typography>
           <Rating
             name="nota"
@@ -229,15 +232,15 @@ const AvaliacaoPage = () => {
           />
           <Button
             variant="contained"
-            color="primary"
             onClick={handleEnviarAvaliacao}
             sx={{
               padding: '10px 20px',
               textTransform: 'none',
               '&:hover': { backgroundColor: '#1976d2' },
+              backgroundColor: '#44a49b',
             }}
           >
-            Enviar Avaliação
+            ENVIAR AVALIAÇÃO
           </Button>
         </Box>
       </Container>

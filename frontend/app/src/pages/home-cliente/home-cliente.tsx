@@ -24,7 +24,7 @@ const HomeCliente: React.FC = () => {
   useEffect(() => {
     const usuario = localStorage.getItem('usuario');
     if (!usuario) {
-      navigate('/login'); // Se não tiver usuário logado, redireciona para login
+      navigate('/login'); 
       return;
     }
 
@@ -93,8 +93,8 @@ const HomeCliente: React.FC = () => {
       <Navbar />
 
       <div className="content" style={{ padding: '20px' }}>
-        <Typography variant="h4" align="center" sx={{ fontWeight: 'bold', marginBottom: 3 }}>
-          Minhas Avaliações
+        <Typography variant="h4" align="center" sx={{ fontWeight: 'bold', marginBottom: 3, fontFamily: 'League Spartan', color: '#9c1d0e' }}>
+          MINHAS AVALIACÕES
         </Typography>
 
         {avaliacoes.length === 0 ? (

@@ -103,8 +103,8 @@ const RestaurantesFuncionario: React.FC = () => {
       <Navbar />
 
       <div className="content" style={{ padding: '20px' }}>
-        <Typography variant="h4" align="center" sx={{ fontWeight: 'bold', marginBottom: 3 }}>
-          Meus Restaurantes
+        <Typography variant="h4" align="center" sx={{ fontWeight: 'bold', marginBottom: 3, fontFamily: 'League Spartan', color: '#9c1d0e' }}>
+          MEUS RESTAURANTES
         </Typography>
 
         {restaurantes.length === 0 ? (
