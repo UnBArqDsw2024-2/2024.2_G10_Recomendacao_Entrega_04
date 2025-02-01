@@ -71,14 +71,16 @@ const AvaliacaoPage = () => {
     }
 
     const idCliente = usuario.idCliente;
+
     const nova = {
       texto: novaAvaliacao,
       urlVideo: '',
       urlImagen: '',
       nota,
-      idRestaurante: Number(idRestaurante),
+      idRestarante: Number(idRestaurante),
       idCliente: idCliente,
     };
+
 
     try {
       const response = await fetch(`http://localhost:8080/avaliacao/createAvaliacao`, {
@@ -89,7 +91,7 @@ const AvaliacaoPage = () => {
 
       if (!response.ok) throw new Error('Erro ao enviar avaliação');
 
-      setAvaliacoes((prev) => [...prev, { idAvaliacao: Date.now(), ...nova }]);
+      setAvaliacoes((prev) => [...prev, { idAvaliacao: Date.now(), ...nova, idRestaurante: Number(idRestaurante) }]);
       setNovaAvaliacao('');
       setNota(null);
     } catch (error) {
