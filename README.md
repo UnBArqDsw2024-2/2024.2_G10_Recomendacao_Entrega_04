@@ -28,10 +28,6 @@ Este repositório tem como principal objetivo auxiliar no registro dos artefatos
 
 Chef Indica é um aplicativo para criar e participar de fóruns dedicados a restaurantes, com filtros por região, tipo de comida, restrições e muito mais.
 
-## Vídeo da Quarta Entrega
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/9p1NwSZwnQY" frameborder="0" allowfullscreen></iframe>
-
 ## Há algo a ser executado?
 
 (X) SIM
